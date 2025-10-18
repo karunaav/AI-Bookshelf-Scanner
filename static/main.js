@@ -7,34 +7,35 @@ fileInput.addEventListener('change', () => {
   const file = fileInput.files[0];
   if (file) {
     previewImage.src = URL.createObjectURL(file);
+    previewImage.style.display = 'block';
   }
 });
 
 scanBtn.addEventListener('click', async () => {
   const file = fileInput.files[0];
-  if (!file) return alert("Please upload an image first!");
-
-  resultsList.innerHTML = "<li>Scanning... ⏳</li>";
+  if (!file) {
+    alert('Please select an image first!');
+    return;
+  }
 
   const formData = new FormData();
-  formData.append('image', file);
+  formData.append('file', file);
+
+  resultsList.innerHTML = '<li>⏳ Scanning your shelf...</li>';
 
   try {
-    const response = await fetch('/scan', {
-      method: 'POST',
-      body: formData,
-    });
+    const response = await fetch('/scan', { method: 'POST', body: formData });
     const data = await response.json();
 
     resultsList.innerHTML = '';
-    if (data.results.length === 0) {
-      resultsList.innerHTML = "<li>No text detected 😕</li>";
-    } else {
-      data.results.forEach((res, i) => {
+    if (data.books && data.books.length > 0) {
+      data.books.forEach((book, i) => {
         const li = document.createElement('li');
-        li.textContent = `${i + 1}. ${res.text}`;
+        li.innerHTML = `<strong>${i + 1}.</strong> ${book}`;
         resultsList.appendChild(li);
       });
+    } else {
+      resultsList.innerHTML = '<li>No books detected 😕</li>';
     }
   } catch (err) {
     resultsList.innerHTML = `<li>Error: ${err.message}</li>`;

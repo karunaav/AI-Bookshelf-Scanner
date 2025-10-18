@@ -4,32 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Bookshelf Scanner</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="background"></div>
-  <div class="app-card">
-    <h1>📚 AI Bookshelf Scanner</h1>
-    <p class="subtitle">Upload your bookshelf photo and let AI find your book titles.</p>
 
-    <div class="upload-box">
-      <input type="file" id="fileInput" accept="image/*">
-      <button id="scanBtn">🔍 Scan</button>
-    </div>
+  <main class="wrapper">
+    <header class="hero">
+      <h1><span>📚</span> AI Bookshelf Scanner</h1>
+      <p>Let intelligence read your shelf — beautifully.</p>
+    </header>
 
-    <div class="image-preview">
-      <img id="previewImage" src="" alt="Preview will appear here">
-    </div>
+    <section class="upload-card glass">
+      <div class="file-input">
+        <input type="file" id="fileInput" accept="image/*">
+        <label for="fileInput" class="upload-btn">Choose Image</label>
+        <button id="scanBtn" class="scan-btn">✨ Scan Now</button>
+      </div>
 
-    <div class="results">
-      <h3>Detected Books</h3>
+      <div class="preview-area">
+        <img id="previewImage" src="" alt="">
+      </div>
+    </section>
+
+    <section class="results glass">
+      <h2>📖 Detected Books</h2>
       <ul id="resultsList"></ul>
-    </div>
-  </div>
+    </section>
+  </main>
 
   <footer>
-    <p>Built with ❤️ using Flask, EasyOCR, and Python</p>
+    <p>Made with 💛 Flask + EasyOCR + OpenCV</p>
   </footer>
 
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>
